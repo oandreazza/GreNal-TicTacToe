@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         GridLayout gridLayout = (GridLayout) findViewById(R.id.gridLayout);
 
         for(int i = 0; i < gridLayout.getChildCount(); i++){
-            ((ImageView) gridLayout.getChildAt(i)).setImageResource(0);
+            ((ImageView) gridLayout.getChildAt(i)).setImageResource(android.R.color.transparent);
         }
 
     }
