@@ -8,6 +8,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import br.com.mauricio.tictactoe.types.Player;
+
 public class MainActivity extends AppCompatActivity {
 
     Player activePlayer = Player.GREMIO;
@@ -21,45 +23,48 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    public void dropIn(View view){
-        ImageView counter = (ImageView)view;
+    public void dropIn(View view) {
+        ImageView counter = (ImageView) view;
         int tappedCounter = Integer.parseInt(counter.getTag().toString());
 
-        if(gameStage[tappedCounter] == 2) {
+        if (gameStage[tappedCounter] == 2) {
             counter.setTranslationY(-1000f);
-            gameStage[tappedCounter] = activePlayer.getPlayerNumber();
 
-            if (activePlayer.equals(Player.GREMIO)) {
-                counter.setImageResource(R.drawable.gremioloog);
-                activePlayer = Player.INTER;
-            } else {
-                counter.setImageResource(R.drawable.logo_internacional);
-                activePlayer = Player.GREMIO;
-            }
+            play(activePlayer, counter);
 
-
-            counter.animate().translationYBy(1000f).setDuration(300);
-
-            for(int[] winningPosition : winningStage){
-                if((gameStage[winningPosition[0]] == gameStage[winningPosition[1]])
+            for (int[] winningPosition : winningStage) {
+                if ((gameStage[winningPosition[0]] == gameStage[winningPosition[1]])
                         && (gameStage[winningPosition[1]] == gameStage[winningPosition[2]])
-                        && gameStage[winningPosition[0]]  != 2  ){
+                        && gameStage[winningPosition[0]] != 2) {
 
                     Player winner = Player.GREMIO;
 
-                    if(gameStage[winningPosition[0]] == Player.INTER.getPlayerNumber()){
+                    if (gameStage[winningPosition[0]] == Player.INTER.getPlayerNumber()) {
                         winner = Player.INTER;
                     }
 
                     TextView winnerMessage = (TextView) findViewById(R.id.winnerMessage);
-                    winnerMessage.setText(String.format("%s has won!!!",winner.getPlayerName()));
+                    winnerMessage.setText(String.format("%s has won!!!", winner.getPlayerName()));
 
-                    LinearLayout winnerLayout = (LinearLayout)findViewById(R.id.playAgainLayout);
+                    LinearLayout winnerLayout = (LinearLayout) findViewById(R.id.playAgainLayout);
                     winnerLayout.setVisibility(View.VISIBLE);
 
                 }
             }
         }
+    }
+
+
+    private void play(Player player, ImageView counter) {
+        int tappedCounter = Integer.parseInt(counter.getTag().toString());
+        gameStage[tappedCounter] = player.getPlayerNumber();
+        counter.setImageResource(player.getPlayerImage());
+        counter.animate().translationYBy(1000f).setDuration(300);
+        activePlayer = getNextPlayer(player);
+    }
+
+    private Player getNextPlayer(Player activePlayer) {
+        return activePlayer.equals(Player.GREMIO) ? Player.INTER : Player.GREMIO;
     }
 
     public void playAgain(View view){
