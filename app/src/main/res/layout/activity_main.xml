@@ -145,4 +145,59 @@
             android:layout_gravity="center_horizontal"
             android:onClick="playAgain" />
     </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_above="@+id/gridLayout"
+        android:layout_alignRight="@+id/playAgainLayout"
+        android:layout_alignEnd="@+id/playAgainLayout"
+        android:id="@+id/linearLayout"
+        android:paddingRight="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Grêmio:"
+            android:id="@+id/textView"
+            android:layout_gravity="right"
+            android:textSize="23sp"
+            android:textColor="#1216ec" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Inter:"
+            android:id="@+id/textView2"
+            android:layout_gravity="right"
+            android:textSize="23sp"
+            android:textColor="#fa0303" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/gridLayout"
+        android:layout_toRightOf="@+id/linearLayout"
+        android:layout_toEndOf="@+id/linearLayout">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:id="@+id/gremioScore"
+            android:textSize="23sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:id="@+id/interScore"
+            android:textSize="23sp"
+            android:layout_marginTop="2sp" />
+    </LinearLayout>
+
 </RelativeLayout>

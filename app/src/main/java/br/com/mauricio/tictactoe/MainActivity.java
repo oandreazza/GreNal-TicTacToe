@@ -16,6 +16,8 @@ public class MainActivity extends AppCompatActivity {
 
     int gameStage[] = {2,2,2,2,2,2,2,2,2};
     int winningStage[][] = {{0,1,2}, {3,4,5}, {6,7,8}, {0,3,6}, {1,4,7}, {2,5,8}, {0,4,8}, {2,4,6}};
+    Integer interScore = 0;
+    Integer gremioScore = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +43,12 @@ public class MainActivity extends AppCompatActivity {
 
                     if (gameStage[winningPosition[0]] == Player.INTER.getPlayerNumber()) {
                         winner = Player.INTER;
+                        interScore++;
+                    }else{
+                        gremioScore++;
                     }
+
+                    refreshScore();
 
                     TextView winnerMessage = (TextView) findViewById(R.id.winnerMessage);
                     winnerMessage.setText(String.format("%s has won!!!", winner.getPlayerName()));
@@ -52,6 +59,14 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    private void refreshScore() {
+        TextView gremioScoreField = (TextView) findViewById(R.id.gremioScore);
+        TextView interScoreField = (TextView) findViewById(R.id.interScore);
+
+        gremioScoreField.setText(gremioScore.toString());
+        interScoreField.setText(interScore.toString());
     }
 
 
