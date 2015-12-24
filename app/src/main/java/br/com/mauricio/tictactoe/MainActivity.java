@@ -29,15 +29,13 @@ public class MainActivity extends AppCompatActivity {
         ImageView counter = (ImageView) view;
         int tappedCounter = Integer.parseInt(counter.getTag().toString());
 
-        if (gameStage[tappedCounter] == 2) {
+        if (theresNoPlay(tappedCounter)) {
             counter.setTranslationY(-1000f);
 
             play(activePlayer, counter);
 
             for (int[] winningPosition : winningStage) {
-                if ((gameStage[winningPosition[0]] == gameStage[winningPosition[1]])
-                        && (gameStage[winningPosition[1]] == gameStage[winningPosition[2]])
-                        && gameStage[winningPosition[0]] != 2) {
+                if (hasWinner(winningPosition)) {
 
                     Player winner = Player.GREMIO;
 
@@ -59,6 +57,16 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    private boolean hasWinner(int[] winningPosition) {
+        return (gameStage[winningPosition[0]] == gameStage[winningPosition[1]])
+                && (gameStage[winningPosition[1]] == gameStage[winningPosition[2]])
+                && gameStage[winningPosition[0]] != 2;
+    }
+
+    private boolean theresNoPlay(int location) {
+        return gameStage[location] == 2;
     }
 
     private void refreshScore() {
