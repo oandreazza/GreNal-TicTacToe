@@ -13,7 +13,8 @@
         android:layout_centerHorizontal="true"
         android:columnCount="3"
         android:rowCount="3"
-        android:id="@+id/gridLayout">
+        android:id="@+id/gridLayout"
+        android:background="@drawable/board">
 
         <ImageView
             android:layout_width="90dp"
