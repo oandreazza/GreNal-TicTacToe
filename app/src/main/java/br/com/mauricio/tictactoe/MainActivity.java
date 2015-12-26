@@ -2,6 +2,7 @@ package br.com.mauricio.tictactoe;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.GridLayout;
 import android.widget.ImageView;
@@ -18,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     int winningStage[][] = {{0,1,2}, {3,4,5}, {6,7,8}, {0,3,6}, {1,4,7}, {2,5,8}, {0,4,8}, {2,4,6}};
     Integer interScore = 0;
     Integer gremioScore = 0;
+    int move = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
             counter.setTranslationY(-1000f);
 
             play(activePlayer, counter);
-
+            
             for (int[] winningPosition : winningStage) {
                 if (hasWinner(winningPosition)) {
 
@@ -56,7 +58,23 @@ public class MainActivity extends AppCompatActivity {
 
                 }
             }
+
+            if(hasDraw())
+                showDrawOption();
+
         }
+    }
+
+    private void showDrawOption() {
+        TextView winnerMessage = (TextView) findViewById(R.id.winnerMessage);
+        winnerMessage.setText("There is a tie!");
+
+        LinearLayout winnerLayout = (LinearLayout) findViewById(R.id.playAgainLayout);
+        winnerLayout.setVisibility(View.VISIBLE);
+    }
+
+    private boolean hasDraw() {
+        return move == 9;
     }
 
     private boolean hasWinner(int[] winningPosition) {
@@ -84,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
         counter.setImageResource(player.getPlayerImage());
         counter.animate().translationYBy(1000f).setDuration(300);
         activePlayer = getNextPlayer(player);
+        move++;
     }
 
     private Player getNextPlayer(Player activePlayer) {
@@ -105,6 +124,8 @@ public class MainActivity extends AppCompatActivity {
         for(int i = 0; i < gridLayout.getChildCount(); i++){
             ((ImageView) gridLayout.getChildAt(i)).setImageResource(android.R.color.transparent);
         }
+
+        move = 0;
 
     }
 }
