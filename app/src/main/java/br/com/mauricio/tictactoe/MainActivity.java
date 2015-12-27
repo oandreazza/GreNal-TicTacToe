@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
             counter.setTranslationY(-1000f);
 
             play(activePlayer, counter);
-            
+
             for (int[] winningPosition : winningStage) {
                 if (hasWinner(winningPosition)) {
 
