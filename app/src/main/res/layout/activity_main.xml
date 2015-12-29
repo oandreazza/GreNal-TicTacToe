@@ -149,7 +149,7 @@
 
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_above="@+id/gridLayout"
@@ -159,41 +159,45 @@
         android:paddingRight="10dp">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="Grêmio:"
             android:id="@+id/textView"
             android:layout_gravity="right"
             android:textSize="23sp"
-            android:textColor="#1216ec" />
+            android:textColor="#1216ec"
+            android:textAlignment="textEnd" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Inter:"
             android:id="@+id/textView2"
             android:layout_gravity="right"
             android:textSize="23sp"
-            android:textColor="#fa0303" />
+            android:textColor="#fa0303"
+            android:textAlignment="textEnd" />
     </LinearLayout>
 
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_above="@+id/gridLayout"
         android:layout_toRightOf="@+id/linearLayout"
-        android:layout_toEndOf="@+id/linearLayout">
+        android:layout_toEndOf="@+id/linearLayout"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="false">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="0"
             android:id="@+id/gremioScore"
             android:textSize="23sp" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="0"
             android:id="@+id/interScore"
