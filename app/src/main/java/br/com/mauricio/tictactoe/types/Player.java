@@ -6,8 +6,8 @@ import android.widget.ImageView;
 import br.com.mauricio.tictactoe.R;
 
 public enum Player {
-    GREMIO(0,"GRÊMIO", R.drawable.gremioloog),
-    INTER(1,"INTER", R.drawable.logo_internacional);
+    GREMIO(0,"GRÊMIO", R.drawable.gremiologo),
+    INTER(1,"INTER", R.drawable.interlogo);
 
     private int playerNumber;
     private String playerName;
