@@ -1,15 +1,14 @@
-package br.com.mauricio.tictactoe;
+package br.com.mauricio.ticTacToeGrenal;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import br.com.mauricio.tictactoe.types.Player;
+import br.com.mauricio.ticTacToeGrenal.types.Player;
 
 public class MainActivity extends AppCompatActivity {
 

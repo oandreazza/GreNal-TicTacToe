@@ -1,4 +1,4 @@
-package br.com.mauricio.tictactoe;
+package br.com.mauricio.ticTacToeGrenal;
 
 import org.junit.Test;
 

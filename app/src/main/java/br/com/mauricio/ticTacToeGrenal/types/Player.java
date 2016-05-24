@@ -1,9 +1,7 @@
-package br.com.mauricio.tictactoe.types;
+package br.com.mauricio.ticTacToeGrenal.types;
 
 
-import android.widget.ImageView;
-
-import br.com.mauricio.tictactoe.R;
+import br.com.mauricio.ticTacToeGrenal.R;
 
 public enum Player {
     GREMIO(0,"GRÊMIO", R.drawable.gremiologo),
