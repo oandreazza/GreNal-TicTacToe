@@ -1,0 +1,58 @@
+{
+  "project_info": {
+    "project_number": "714427663182",
+    "firebase_url": "https://grenal-jogo-da-velha.firebaseio.com",
+    "project_id": "grenal-jogo-da-velha",
+    "storage_bucket": "grenal-jogo-da-velha.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:714427663182:android:30d0718e62868649",
+        "android_client_info": {
+          "package_name": "br.com.mauricio.ticTacToeGrenal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "714427663182-sqcottq0tg07srqln4d9uj906gd0ciri.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.mauricio.ticTacToeGrenal",
+            "certificate_hash": "1020CDBAB55A430AE83CFF788A3A01EACEE8C17D"
+          }
+        },
+        {
+          "client_id": "714427663182-s292rhvsslhto69e5pa99ht9fjn572m3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.mauricio.ticTacToeGrenal",
+            "certificate_hash": "2088406A9779715D518E53633A9B62374E1EAF6D"
+          }
+        },
+        {
+          "client_id": "714427663182-5ln0ne1pva49s91kj5m610h8fgloar61.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCUtToSu1fnHBj3HRbteBdJpBc67CWewWE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
