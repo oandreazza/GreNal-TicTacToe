@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
     private void showDrawOption() {
         TextView winnerMessage = (TextView) findViewById(R.id.winnerMessage);
-        winnerMessage.setText("There is a tie!");
+        winnerMessage.setText("Ocorreu um empate!");
 
         LinearLayout winnerLayout = (LinearLayout) findViewById(R.id.playAgainLayout);
         winnerLayout.setVisibility(View.VISIBLE);
@@ -225,7 +225,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         if (result.isSuccess()) {
             // Signed in successfully, show authenticated UI.
             acct = result.getSignInAccount();
-            Log.d(TAG, "Olá: " + acct.getEmail());
             //mStatusTextView.setText(getString(R.string.signed_in_fmt, acct.getDisplayName()));
             updateUI(true);
         } else {

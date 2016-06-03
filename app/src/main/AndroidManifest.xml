@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="br.com.mauricio.ticTacToeGrenal" android:versionName="@string/version_name" android:versionCode="4">
+    package="br.com.mauricio.ticTacToeGrenal" android:versionName="@string/version_name" android:versionCode="5">
 
     <application
         android:allowBackup="true"
