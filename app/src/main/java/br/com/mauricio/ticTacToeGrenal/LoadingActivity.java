@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 
 import com.google.android.gms.auth.api.Auth;
@@ -25,7 +24,6 @@ public class LoadingActivity extends AppCompatActivity implements GoogleApiClien
 
     GoogleApiClient mGoogleApiClient;
     private static final int RC_SIGN_IN = 9001;
-    private static final String TAG = "MainActivity";
     private GoogleSignInAccount acct;
     private ProgressDialog mProgressDialog;
     private SharedPreferences userSession;
@@ -111,7 +109,7 @@ public class LoadingActivity extends AppCompatActivity implements GoogleApiClien
     }
 
     private void handleSignInResult(GoogleSignInResult result) {
-        Log.d(TAG, "handleSignInResult:" + result.getStatus().getStatus());
+
         if (result.isSuccess()) {
             acct = result.getSignInAccount();
             userSession = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -141,7 +139,6 @@ public class LoadingActivity extends AppCompatActivity implements GoogleApiClien
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         // An unresolvable error has occurred and Google APIs (including Sign-In) will not
         // be available.
-        Log.d(TAG, "onConnectionFailed:" + connectionResult);
     }
 
     private void showProgressDialog() {

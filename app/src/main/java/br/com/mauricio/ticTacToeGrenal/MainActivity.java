@@ -10,6 +10,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import br.com.mauricio.ticTacToeGrenal.types.Player;
 
 public class MainActivity extends AppCompatActivity {
@@ -31,8 +34,8 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences userSession = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         TextView welcome = (TextView) findViewById(R.id.welcome);
         welcome.setText(userSession.getString("email", null));
-       // FirebaseDatabase db = FirebaseDatabase.getInstance();
-        //DatabaseReference schema = db.getReference("ranking");
+        FirebaseDatabase db = FirebaseDatabase.getInstance();
+        DatabaseReference ranking = db.getReference("ranking");
 
         //schema.setValue("teste");
     }
