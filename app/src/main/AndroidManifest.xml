@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="br.com.mauricio.ticTacToeGrenal" android:versionName="@string/version_name" android:versionCode="5">
+    package="br.com.mauricio.ticTacToeGrenal"
+    android:versionCode="6"
+    android:versionName="@string/version_name">
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/grenal_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme" >
-        <activity android:name=".MainActivity" >
+        android:theme="@style/AppTheme">
+        <activity android:name=".MainActivity">
+        </activity>
+        <activity android:name=".LoadingActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
