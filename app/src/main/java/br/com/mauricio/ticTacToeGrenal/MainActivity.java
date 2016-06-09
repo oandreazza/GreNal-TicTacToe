@@ -13,6 +13,9 @@ import android.widget.TextView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import org.joda.time.LocalDateTime;
+
+import br.com.mauricio.ticTacToeGrenal.model.FinalScore;
 import br.com.mauricio.ticTacToeGrenal.types.Player;
 
 public class MainActivity extends AppCompatActivity {
@@ -31,13 +34,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        SharedPreferences userSession = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        userSession = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         TextView welcome = (TextView) findViewById(R.id.welcome);
         welcome.setText(userSession.getString("email", null));
-        FirebaseDatabase db = FirebaseDatabase.getInstance();
-        DatabaseReference ranking = db.getReference("ranking");
 
-        //schema.setValue("teste");
     }
 
 
@@ -69,6 +69,17 @@ public class MainActivity extends AppCompatActivity {
 
                     LinearLayout winnerLayout = (LinearLayout) findViewById(R.id.playAgainLayout);
                     winnerLayout.setVisibility(View.VISIBLE);
+
+                    FirebaseDatabase db = FirebaseDatabase.getInstance();
+                    DatabaseReference ranking = db.getReference("ranking").child("results");
+
+                    FinalScore finalScore = new FinalScore();
+                    finalScore.setWinner(winner.getPlayerName());
+                    finalScore.setDate(LocalDateTime.now().toString());
+                    finalScore.setEmail(userSession.getString("email",null));
+
+
+                    ranking.child(userSession.getString("id",null)).push().setValue(finalScore);
 
                 }
             }

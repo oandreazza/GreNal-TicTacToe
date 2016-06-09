@@ -115,7 +115,7 @@ public class LoadingActivity extends AppCompatActivity implements GoogleApiClien
             userSession = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
             SharedPreferences.Editor userSessionEdit = userSession.edit();
             userSessionEdit.putString("email", acct.getEmail());
-            userSessionEdit.putString("id", acct.getIdToken());
+            userSessionEdit.putString("id", acct.getId());
             userSessionEdit.commit();
             Intent game = new Intent(LoadingActivity.this,MainActivity.class);
             startActivity(game);

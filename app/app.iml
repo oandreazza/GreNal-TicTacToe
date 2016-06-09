@@ -128,6 +128,7 @@
     <orderEntry type="library" exported="" name="firebase-iid-9.0.1" level="project" />
     <orderEntry type="library" exported="" name="play-services-basement-9.0.1" level="project" />
     <orderEntry type="library" exported="" name="play-services-base-9.0.1" level="project" />
+    <orderEntry type="library" exported="" name="joda-time-2.9.2" level="project" />
     <orderEntry type="library" exported="" name="firebase-database-9.0.1" level="project" />
     <orderEntry type="library" exported="" name="firebase-database-connection-9.0.1" level="project" />
     <orderEntry type="library" exported="" name="play-services-tasks-9.0.1" level="project" />
