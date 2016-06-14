@@ -10,4 +10,23 @@ public class Match {
     private Player playerTwo;
 
     private Game game;
+
+
+    public Match(TicTacToe game, Player playerOne, Player playerTwo) {
+        this.game = game;
+        this.playerOne = playerOne;
+        this.playerTwo = playerTwo;
+    }
+
+    public Match() {
+
+    }
+
+    public Game getGame() {
+        return this.game;
+    }
+
+    public boolean hasPlayers() {
+        return this.playerOne != null && this.playerTwo != null;
+    }
 }
