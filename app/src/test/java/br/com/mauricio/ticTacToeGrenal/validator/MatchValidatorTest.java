@@ -29,7 +29,7 @@ public class MatchValidatorTest {
     @Test
     public void shouldNotThrowGameNotFoundExceptionWhanFinGameInMatch(){
         Match match = new Match(new TicTacToe(), null, null);
-        validator.validate(match);
+        validator.hasGame(match);
 
     }
 
@@ -37,7 +37,7 @@ public class MatchValidatorTest {
     public void shouldThrowPlayersNotFoundWhenGameHasNoPlayers(){
         Match match = new Match(new TicTacToe(),null,null);
 
-        validator.validate(match);
+        validator.hasAvailablePlayers(match);
 
     }
 
@@ -45,8 +45,23 @@ public class MatchValidatorTest {
     public void shouldThrowPlayersNotFoundWhenGameHasOnlyPlayerOne(){
         Match match = new Match(new TicTacToe(), Player.GREMIO,null);
 
-        validator.validate(match);
+        validator.hasAvailablePlayers(match);
 
+    }
+
+    @Test(expected = PlayersNotFoundException.class)
+    public void shouldThrowPlayersNotFoundWhenGameHasOnlyPlayerTwo(){
+        Match match = new Match(new TicTacToe(), null,Player.GREMIO);
+
+        validator.hasAvailablePlayers(match);
+
+    }
+
+    @Test
+    public void shouldNotThrowPlayersNotFoundWhenGameHasPlayerOneAndTwo(){
+        Match match = new Match(new TicTacToe(), Player.INTER,Player.GREMIO);
+
+        validator.hasAvailablePlayers(match);
     }
 
 
