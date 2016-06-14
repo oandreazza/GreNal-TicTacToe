@@ -12,7 +12,7 @@ public class Match {
     private Game game;
 
 
-    public Match(TicTacToe game, Player playerOne, Player playerTwo) {
+    public Match(Game game, Player playerOne, Player playerTwo) {
         this.game = game;
         this.playerOne = playerOne;
         this.playerTwo = playerTwo;
