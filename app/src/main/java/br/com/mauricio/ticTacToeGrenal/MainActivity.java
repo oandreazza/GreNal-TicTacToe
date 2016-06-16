@@ -16,6 +16,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import org.joda.time.LocalDateTime;
 
 import br.com.mauricio.ticTacToeGrenal.model.FinalScore;
+import br.com.mauricio.ticTacToeGrenal.model.TicTacToe;
 import br.com.mauricio.ticTacToeGrenal.types.Player;
 
 public class MainActivity extends AppCompatActivity {
@@ -43,9 +44,22 @@ public class MainActivity extends AppCompatActivity {
 
     public void dropIn(View view) {
         ImageView counter = (ImageView) view;
-        int tappedCounter = Integer.parseInt(counter.getTag().toString());
+        int position = Integer.parseInt(counter.getTag().toString());
 
-        if (theresNoPlay(tappedCounter)) {
+        TicTacToe ticTacToe = new TicTacToe();
+
+        if(ticTacToe.canPlay(position)){
+            ticTacToe.play(activePlayer,position);
+
+            if(ticTacToe.hasWinner()){
+
+            }
+
+            activePlayer = getNextPlayer();
+        }
+
+
+        if (theresNoPlay(position)) {
             counter.setTranslationY(-1000f);
 
             play(activePlayer, counter);
@@ -126,12 +140,12 @@ public class MainActivity extends AppCompatActivity {
         gameStage[tappedCounter] = player.getPlayerNumber();
         counter.setImageResource(player.getPlayerImage());
         counter.animate().translationYBy(1000f).setDuration(300);
-        activePlayer = getNextPlayer(player);
+        activePlayer = getNextPlayer();
         move++;
     }
 
-    private Player getNextPlayer(Player activePlayer) {
-        return activePlayer.equals(Player.GREMIO) ? Player.INTER : Player.GREMIO;
+    private Player getNextPlayer() {
+        return this.activePlayer.equals(Player.GREMIO) ? Player.INTER : Player.GREMIO;
     }
 
     public void playAgain(View view){
