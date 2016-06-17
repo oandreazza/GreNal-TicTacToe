@@ -6,7 +6,7 @@ import br.com.mauricio.ticTacToeGrenal.types.Player;
 
 public class TicTacToe implements Game {
 
-    private int stage[] = new int[9];
+    private int[] stage;
     private int winnerPositions[][] = {{0,1,2}, {3,4,5}, {6,7,8}, {0,3,6}, {1,4,7}, {2,5,8}, {0,4,8}, {2,4,6}};
     private int moves;
 
@@ -55,9 +55,7 @@ public class TicTacToe implements Game {
     }
 
     private void setInitialStageStatus() {
-        for (int i = 0; i < 9 ; i++) {
-            this.stage[i] = 2;
-        }
+        this.stage = new int[] {2,2,2,2,2,2,2,2,2};
         this.moves = 0;
     }
 
