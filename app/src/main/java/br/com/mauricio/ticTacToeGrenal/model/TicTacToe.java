@@ -1,14 +1,22 @@
 package br.com.mauricio.ticTacToeGrenal.model;
 
 
+import br.com.mauricio.ticTacToeGrenal.exception.SpotAlreadyFilledException;
 import br.com.mauricio.ticTacToeGrenal.types.Player;
 
 public class TicTacToe implements Game {
 
-    private int stage[] = {2,2,2,2,2,2,2,2,2};
+    private int stage[] = new int[9];
     private int winnerPositions[][] = {{0,1,2}, {3,4,5}, {6,7,8}, {0,3,6}, {1,4,7}, {2,5,8}, {0,4,8}, {2,4,6}};
+    private int moves;
+
+    public TicTacToe() {
+    }
 
     public void play(Player player, int position) {
+        if(!canPlay(position))
+            throw new SpotAlreadyFilledException();
+
         this.stage[position] = player.getPlayerNumber();
     }
 
@@ -39,5 +47,25 @@ public class TicTacToe implements Game {
         this.stage[1] = Player.GREMIO.getPlayerNumber();
         this.stage[2] = Player.GREMIO.getPlayerNumber();
 
+    }
+
+    @Override
+    public void start() {
+       setInitialStageStatus();
+    }
+
+    private void setInitialStageStatus() {
+        for (int i = 0; i < 9 ; i++) {
+            this.stage[i] = 2;
+        }
+        this.moves = 0;
+    }
+
+    public boolean hasDraw() {
+        return moves == 9;
+    }
+
+    public void setMoves(int moves) {
+        this.moves = moves;
     }
 }

@@ -9,26 +9,30 @@ import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import org.joda.time.LocalDateTime;
 
+import br.com.mauricio.ticTacToeGrenal.exception.SpotAlreadyFilledException;
 import br.com.mauricio.ticTacToeGrenal.model.FinalScore;
+import br.com.mauricio.ticTacToeGrenal.model.Match;
 import br.com.mauricio.ticTacToeGrenal.model.TicTacToe;
 import br.com.mauricio.ticTacToeGrenal.types.Player;
 
 public class MainActivity extends AppCompatActivity {
 
     Player activePlayer = Player.GREMIO;
-    private TextView mStatusTextView;
     int gameStage[] = {2,2,2,2,2,2,2,2,2};
     int winningStage[][] = {{0,1,2}, {3,4,5}, {6,7,8}, {0,3,6}, {1,4,7}, {2,5,8}, {0,4,8}, {2,4,6}};
     Integer interScore = 0;
     Integer gremioScore = 0;
     int move = 0;
     SharedPreferences userSession;
+    Match match;
+    TicTacToe ticTacToe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +43,14 @@ public class MainActivity extends AppCompatActivity {
         TextView welcome = (TextView) findViewById(R.id.welcome);
         welcome.setText(userSession.getString("email", null));
 
+        startGame();
+
+    }
+
+    private void startGame() {
+        match = new Match(new TicTacToe(), Player.GREMIO, Player.INTER);
+        match.start();
+        ticTacToe = (TicTacToe) match.getGame();
     }
 
 
@@ -46,17 +58,23 @@ public class MainActivity extends AppCompatActivity {
         ImageView counter = (ImageView) view;
         int position = Integer.parseInt(counter.getTag().toString());
 
-        TicTacToe ticTacToe = new TicTacToe();
-
-        if(ticTacToe.canPlay(position)){
+        try {
             ticTacToe.play(activePlayer,position);
 
             if(ticTacToe.hasWinner()){
-
+                showWinnerOption();
+                startGame();
+            }else if(ticTacToe.hasDraw()){
+                showDrawOption();
+                startGame();
+            }else{
+                activePlayer = getNextPlayer();
             }
-
-            activePlayer = getNextPlayer();
+        }catch ( SpotAlreadyFilledException e) {
+            Toast.makeText(getApplicationContext(), "Local já ocupado", Toast.LENGTH_SHORT).show();
         }
+
+
 
 
         if (theresNoPlay(position)) {
@@ -78,11 +96,7 @@ public class MainActivity extends AppCompatActivity {
 
                     refreshScore();
 
-                    TextView winnerMessage = (TextView) findViewById(R.id.winnerMessage);
-                    winnerMessage.setText(String.format("%s venceu!!!", winner.getPlayerName()));
-
-                    LinearLayout winnerLayout = (LinearLayout) findViewById(R.id.playAgainLayout);
-                    winnerLayout.setVisibility(View.VISIBLE);
+                    showWinnerOption();
 
                     FirebaseDatabase db = FirebaseDatabase.getInstance();
                     DatabaseReference ranking = db.getReference("ranking").child("results");
@@ -102,6 +116,14 @@ public class MainActivity extends AppCompatActivity {
                 showDrawOption();
 
         }
+    }
+
+    private void showWinnerOption() {
+        TextView winnerMessage = (TextView) findViewById(R.id.winnerMessage);
+        winnerMessage.setText(String.format("%s venceu!!!", activePlayer.getPlayerName()));
+
+        LinearLayout winnerLayout = (LinearLayout) findViewById(R.id.playAgainLayout);
+        winnerLayout.setVisibility(View.VISIBLE);
     }
 
     private void showDrawOption() {

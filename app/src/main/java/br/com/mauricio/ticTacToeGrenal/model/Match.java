@@ -29,4 +29,8 @@ public class Match {
     public boolean hasPlayers() {
         return this.playerOne != null && this.playerTwo != null;
     }
+
+    public void start() {
+        game.start();
+    }
 }

@@ -5,5 +5,6 @@ package br.com.mauricio.ticTacToeGrenal.model;
  */
 public interface Game {
 
+    public void start();
 
 }
