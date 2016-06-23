@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.GridLayout;
 import android.widget.ImageView;
@@ -23,13 +24,11 @@ import br.com.mauricio.ticTacToeGrenal.model.TicTacToe;
 import br.com.mauricio.ticTacToeGrenal.types.Player;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String TAG = MainActivity.class.getSimpleName();
 
-    Player activePlayer = Player.GREMIO;
-    int gameStage[] = {2,2,2,2,2,2,2,2,2};
-    int winningStage[][] = {{0,1,2}, {3,4,5}, {6,7,8}, {0,3,6}, {1,4,7}, {2,5,8}, {0,4,8}, {2,4,6}};
+    Player activePlayer;
     Integer interScore = 0;
     Integer gremioScore = 0;
-    int move = 0;
     SharedPreferences userSession;
     Match match;
     TicTacToe ticTacToe;
@@ -51,22 +50,34 @@ public class MainActivity extends AppCompatActivity {
         match = new Match(new TicTacToe(), Player.GREMIO, Player.INTER);
         match.start();
         ticTacToe = (TicTacToe) match.getGame();
+        this.activePlayer = Player.GREMIO;
     }
 
 
     public void dropIn(View view) {
+        Log.d(TAG, "#### PLAYER ##### "+activePlayer.getPlayerName());
+
         ImageView counter = (ImageView) view;
         int position = Integer.parseInt(counter.getTag().toString());
 
+
         try {
             ticTacToe.play(activePlayer,position);
+            counter.setTranslationY(-1000f);
+            counter.animate().translationYBy(1000f).setDuration(300);
+            counter.setImageResource(activePlayer.getPlayerImage());
 
             if(ticTacToe.hasWinner()){
                 showWinnerOption();
-                startGame();
+                if (activePlayer.equals(Player.INTER)) {
+                     interScore++;
+                }else{
+                    gremioScore++;
+                }
+                refreshScore();
+                persistWinner();
             }else if(ticTacToe.hasDraw()){
                 showDrawOption();
-                startGame();
             }else{
                 activePlayer = getNextPlayer();
             }
@@ -74,53 +85,24 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Local já ocupado", Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+    private void persistWinner() {
+        FirebaseDatabase db = FirebaseDatabase.getInstance();
+        DatabaseReference ranking = db.getReference("ranking").child("results");
+
+        FinalScore finalScore = new FinalScore();
+        finalScore.setWinner(activePlayer.getPlayerName());
+        finalScore.setDate(LocalDateTime.now().toString());
+        finalScore.setEmail(userSession.getString("email",null));
 
 
-
-        if (theresNoPlay(position)) {
-            counter.setTranslationY(-1000f);
-
-            play(activePlayer, counter);
-
-            for (int[] winningPosition : winningStage) {
-                if (hasWinner(winningPosition)) {
-
-                    Player winner = Player.GREMIO;
-
-                    if (gameStage[winningPosition[0]] == Player.INTER.getPlayerNumber()) {
-                        winner = Player.INTER;
-                        interScore++;
-                    }else{
-                        gremioScore++;
-                    }
-
-                    refreshScore();
-
-                    showWinnerOption();
-
-                    FirebaseDatabase db = FirebaseDatabase.getInstance();
-                    DatabaseReference ranking = db.getReference("ranking").child("results");
-
-                    FinalScore finalScore = new FinalScore();
-                    finalScore.setWinner(winner.getPlayerName());
-                    finalScore.setDate(LocalDateTime.now().toString());
-                    finalScore.setEmail(userSession.getString("email",null));
-
-
-                    ranking.child(userSession.getString("id",null)).push().setValue(finalScore);
-
-                }
-            }
-
-            if(hasDraw())
-                showDrawOption();
-
-        }
+        ranking.child(userSession.getString("id",null)).push().setValue(finalScore);
     }
 
     private void showWinnerOption() {
         TextView winnerMessage = (TextView) findViewById(R.id.winnerMessage);
-        winnerMessage.setText(String.format("%s venceu!!!", activePlayer.getPlayerName()));
+        winnerMessage.setText(String.format("GOOOOL!!! DO %s", activePlayer.getPlayerName()));
 
         LinearLayout winnerLayout = (LinearLayout) findViewById(R.id.playAgainLayout);
         winnerLayout.setVisibility(View.VISIBLE);
@@ -134,20 +116,6 @@ public class MainActivity extends AppCompatActivity {
         winnerLayout.setVisibility(View.VISIBLE);
     }
 
-    private boolean hasDraw() {
-        return move == 9;
-    }
-
-    private boolean hasWinner(int[] winningPosition) {
-        return (gameStage[winningPosition[0]] == gameStage[winningPosition[1]])
-                && (gameStage[winningPosition[1]] == gameStage[winningPosition[2]])
-                && gameStage[winningPosition[0]] != 2;
-    }
-
-    private boolean theresNoPlay(int location) {
-        return gameStage[location] == 2;
-    }
-
     private void refreshScore() {
         TextView gremioScoreField = (TextView) findViewById(R.id.gremioScore);
         TextView interScoreField = (TextView) findViewById(R.id.interScore);
@@ -157,14 +125,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void play(Player player, ImageView counter) {
-        int tappedCounter = Integer.parseInt(counter.getTag().toString());
-        gameStage[tappedCounter] = player.getPlayerNumber();
-        counter.setImageResource(player.getPlayerImage());
-        counter.animate().translationYBy(1000f).setDuration(300);
-        activePlayer = getNextPlayer();
-        move++;
-    }
 
     private Player getNextPlayer() {
         return this.activePlayer.equals(Player.GREMIO) ? Player.INTER : Player.GREMIO;
@@ -174,20 +134,13 @@ public class MainActivity extends AppCompatActivity {
         LinearLayout winnerLayout = (LinearLayout)findViewById(R.id.playAgainLayout);
         winnerLayout.setVisibility(View.INVISIBLE);
 
-        activePlayer = Player.GREMIO;
-
-        for (int i =0; i < gameStage.length; i++){
-            gameStage[i] = 2;
-        }
-
         GridLayout gridLayout = (GridLayout) findViewById(R.id.gridLayout);
 
         for(int i = 0; i < gridLayout.getChildCount(); i++){
             ((ImageView) gridLayout.getChildAt(i)).setImageResource(android.R.color.transparent);
         }
 
-        move = 0;
-
+        startGame();
     }
 
 }

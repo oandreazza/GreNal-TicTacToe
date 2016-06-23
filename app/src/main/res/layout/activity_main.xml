@@ -141,7 +141,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Play Again"
+            android:text="Nova Partida"
             android:id="@+id/playAgain"
             android:layout_gravity="center_horizontal"
             android:onClick="playAgain" />

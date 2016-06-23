@@ -72,5 +72,12 @@ public class TicTacToeTest {
         assertFalse(ticTacToe.hasDraw());
     }
 
+    @Test
+    public void shouldIncrementMoveWhenPlay(){
+        ticTacToe.play(Player.GREMIO,1);
+
+        assertEquals(1,ticTacToe.getMoves());
+    }
+
 
 }

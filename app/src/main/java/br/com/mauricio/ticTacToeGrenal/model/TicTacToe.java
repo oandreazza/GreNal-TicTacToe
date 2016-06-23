@@ -17,6 +17,7 @@ public class TicTacToe implements Game {
         if(!canPlay(position))
             throw new SpotAlreadyFilledException();
 
+        moves++;
         this.stage[position] = player.getPlayerNumber();
     }
 
@@ -65,5 +66,9 @@ public class TicTacToe implements Game {
 
     public void setMoves(int moves) {
         this.moves = moves;
+    }
+
+    public int getMoves() {
+        return moves;
     }
 }
