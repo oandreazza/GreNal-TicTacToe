@@ -4,7 +4,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.GridLayout;
 import android.widget.ImageView;
@@ -24,7 +23,6 @@ import br.com.mauricio.ticTacToeGrenal.model.TicTacToe;
 import br.com.mauricio.ticTacToeGrenal.types.Player;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String TAG = MainActivity.class.getSimpleName();
 
     Player activePlayer;
     Integer interScore = 0;
@@ -55,17 +53,13 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void dropIn(View view) {
-        Log.d(TAG, "#### PLAYER ##### "+activePlayer.getPlayerName());
-
         ImageView counter = (ImageView) view;
         int position = Integer.parseInt(counter.getTag().toString());
 
 
         try {
             ticTacToe.play(activePlayer,position);
-            counter.setTranslationY(-1000f);
-            counter.animate().translationYBy(1000f).setDuration(300);
-            counter.setImageResource(activePlayer.getPlayerImage());
+            playAnimate(counter);
 
             if(ticTacToe.hasWinner()){
                 showWinnerOption();
@@ -85,6 +79,12 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Local já ocupado", Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+    private void playAnimate(ImageView counter) {
+        counter.setTranslationY(-1000f);
+        counter.animate().translationYBy(1000f).setDuration(300);
+        counter.setImageResource(activePlayer.getPlayerImage());
     }
 
     private void persistWinner() {
@@ -134,13 +134,17 @@ public class MainActivity extends AppCompatActivity {
         LinearLayout winnerLayout = (LinearLayout)findViewById(R.id.playAgainLayout);
         winnerLayout.setVisibility(View.INVISIBLE);
 
+        resetStage();
+
+        startGame();
+    }
+
+    private void resetStage() {
         GridLayout gridLayout = (GridLayout) findViewById(R.id.gridLayout);
 
         for(int i = 0; i < gridLayout.getChildCount(); i++){
             ((ImageView) gridLayout.getChildAt(i)).setImageResource(android.R.color.transparent);
         }
-
-        startGame();
     }
 
 }
