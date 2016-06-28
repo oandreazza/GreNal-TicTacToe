@@ -23,7 +23,7 @@
             android:layout_row="0"
             android:layout_column="0"
             android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="20dp"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="10dp"
             android:onClick="dropIn"
@@ -36,7 +36,7 @@
             android:layout_row="0"
             android:layout_column="1"
             android:layout_marginTop="10dp"
-            android:layout_marginLeft="25dp"
+            android:layout_marginLeft="30dp"
             android:onClick="dropIn"
             android:tag="1"/>
 
@@ -46,7 +46,7 @@
             android:id="@+id/imageView3"
             android:layout_row="0"
             android:layout_column="2"
-            android:layout_marginLeft="25dp"
+            android:layout_marginLeft="35dp"
             android:layout_marginTop="10dp"
             android:onClick="dropIn"
             android:tag="2"/>
@@ -57,7 +57,7 @@
             android:id="@+id/imageView4"
             android:layout_row="1"
             android:layout_column="0"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="20dp"
             android:layout_marginTop="24dp"
             android:onClick="dropIn"
             android:tag="3"/>
@@ -68,7 +68,7 @@
             android:id="@+id/imageView5"
             android:layout_row="1"
             android:layout_column="1"
-            android:layout_marginLeft="25dp"
+            android:layout_marginLeft="35dp"
             android:layout_marginTop="24dp"
             android:onClick="dropIn"
             android:tag="4" />
@@ -79,8 +79,8 @@
             android:id="@+id/imageView6"
             android:layout_row="1"
             android:layout_column="2"
-            android:layout_marginLeft="25dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginLeft="35dp"
+            android:layout_marginTop="27dp"
             android:onClick="dropIn"
             android:tag="5" />
 
@@ -90,8 +90,8 @@
             android:id="@+id/imageView7"
             android:layout_row="2"
             android:layout_column="0"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="40dp"
             android:onClick="dropIn"
             android:tag="6" />
 
@@ -101,8 +101,8 @@
             android:id="@+id/imageView8"
             android:layout_row="2"
             android:layout_column="1"
-            android:layout_marginLeft="25dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginLeft="35dp"
+            android:layout_marginTop="40dp"
             android:onClick="dropIn"
             android:tag="7" />
 
@@ -112,8 +112,8 @@
             android:id="@+id/imageView9"
             android:layout_row="2"
             android:layout_column="2"
-            android:layout_marginLeft="25dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginLeft="35dp"
+            android:layout_marginTop="40dp"
             android:onClick="dropIn"
             android:tag="8"
             />
@@ -148,34 +148,59 @@
     </LinearLayout>
 
     <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="fill_parent"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_above="@+id/gridLayout"
-        android:layout_alignRight="@+id/playAgainLayout"
-        android:layout_alignEnd="@+id/playAgainLayout"
         android:id="@+id/linearLayout"
-        android:paddingRight="10dp">
+        android:layout_alignParentBottom="true"
+        android:weightSum="1"
+        android:textAlignment="center"
+        android:paddingLeft="20sp">
 
         <TextView
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Grêmio:"
+            android:text="Grêmio"
             android:id="@+id/textView"
-            android:layout_gravity="right"
-            android:textSize="23sp"
+            android:textSize="35sp"
             android:textColor="#1216ec"
+            android:layout_weight="0.12" />
+
+        <TextView
+            android:layout_width="33dp"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:id="@+id/gremioScore"
+            android:textSize="40sp"
+            android:layout_weight="0.08" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="X"
+            android:id="@+id/textView3"
+            android:textSize="25sp"
+            android:textColor="#000"
+            android:singleLine="false" />
+
+        <TextView
+            android:layout_width="44dp"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:id="@+id/interScore"
+            android:textSize="40sp"
+            android:layout_marginTop="2sp"
             android:textAlignment="textEnd" />
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Inter:"
+            android:text="Inter"
             android:id="@+id/textView2"
-            android:layout_gravity="right"
-            android:textSize="23sp"
+            android:textSize="35sp"
             android:textColor="#fa0303"
+            android:layout_weight="0.57"
             android:textAlignment="textEnd" />
 
     </LinearLayout>
@@ -190,20 +215,6 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="false">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="0"
-            android:id="@+id/gremioScore"
-            android:textSize="23sp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="0"
-            android:id="@+id/interScore"
-            android:textSize="23sp"
-            android:layout_marginTop="2sp" />
     </LinearLayout>
 
     <TextView

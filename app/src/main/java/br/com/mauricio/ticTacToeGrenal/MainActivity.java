@@ -2,6 +2,7 @@ package br.com.mauricio.ticTacToeGrenal;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -24,12 +25,13 @@ import br.com.mauricio.ticTacToeGrenal.types.Player;
 
 public class MainActivity extends AppCompatActivity {
 
-    Player activePlayer;
-    Integer interScore = 0;
-    Integer gremioScore = 0;
-    SharedPreferences userSession;
-    Match match;
-    TicTacToe ticTacToe;
+    private Player activePlayer;
+    private Integer interScore = 0;
+    private Integer gremioScore = 0;
+    private SharedPreferences userSession;
+    private Match match;
+    private TicTacToe ticTacToe;
+    private boolean doubleBackToExitPressedOnce = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,4 +149,22 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            this.finishAffinity();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Clique novamente para sair", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
+    }
 }
