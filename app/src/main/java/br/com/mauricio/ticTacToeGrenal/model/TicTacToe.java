@@ -7,10 +7,10 @@ import br.com.mauricio.ticTacToeGrenal.types.Player;
 public class TicTacToe implements Game {
 
     private int[] stage;
-    private int winnerPositions[][] = {{0,1,2}, {3,4,5}, {6,7,8}, {0,3,6}, {1,4,7}, {2,5,8}, {0,4,8}, {2,4,6}};
     private int moves;
 
     public TicTacToe() {
+        setInitialStageStatus();
     }
 
     public void play(Player player, int position) {
@@ -21,27 +21,11 @@ public class TicTacToe implements Game {
         this.stage[position] = player.getPlayerNumber();
     }
 
-    public Integer getPlayerNumberByLocationStage(int position) {
-        return this.stage[position];
-    }
 
     public boolean canPlay(int position) {
         return stage[position] == 2;
     }
 
-    public boolean hasWinner() {
-        boolean hasWinner = false;
-        for (int[] winnerPosition: winnerPositions) {
-            hasWinner = (stage[winnerPosition[0]] == stage[winnerPosition[1]])
-                    && (stage[winnerPosition[1]] == stage[winnerPosition[2]])
-                    && stage[winnerPosition[0]] != 2;
-
-            if(hasWinner)
-                break;
-        }
-
-        return hasWinner;
-    }
 
     public void playFirstRow(){
         this.stage[0] = Player.GREMIO.getPlayerNumber();
@@ -50,9 +34,13 @@ public class TicTacToe implements Game {
 
     }
 
+    public void playDraw(){
+        this.moves = 9;
+    }
+
     @Override
     public void start() {
-       setInitialStageStatus();
+       //setInitialStageStatus();
     }
 
     private void setInitialStageStatus() {
@@ -60,15 +48,16 @@ public class TicTacToe implements Game {
         this.moves = 0;
     }
 
-    public boolean hasDraw() {
-        return moves == 9;
-    }
 
     public void setMoves(int moves) {
         this.moves = moves;
     }
 
     public int getMoves() {
-        return moves;
+        return this.moves;
+    }
+
+    public int getStagePosition(int position) {
+        return this.stage[position];
     }
 }

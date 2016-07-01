@@ -17,10 +17,13 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import org.joda.time.LocalDateTime;
 
+import br.com.mauricio.ticTacToeGrenal.exception.DrawException;
 import br.com.mauricio.ticTacToeGrenal.exception.SpotAlreadyFilledException;
+import br.com.mauricio.ticTacToeGrenal.exception.WinnerException;
 import br.com.mauricio.ticTacToeGrenal.model.FinalScore;
 import br.com.mauricio.ticTacToeGrenal.model.Match;
 import br.com.mauricio.ticTacToeGrenal.model.TicTacToe;
+import br.com.mauricio.ticTacToeGrenal.strategy.TicTacToeStrategy;
 import br.com.mauricio.ticTacToeGrenal.types.Player;
 
 public class MainActivity extends AppCompatActivity {
@@ -32,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private Match match;
     private TicTacToe ticTacToe;
     private boolean doubleBackToExitPressedOnce = false;
+    private TicTacToeStrategy gameStrategy;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         match.start();
         ticTacToe = (TicTacToe) match.getGame();
         this.activePlayer = Player.GREMIO;
+        gameStrategy = new TicTacToeStrategy(ticTacToe);
     }
 
 
@@ -62,23 +67,22 @@ public class MainActivity extends AppCompatActivity {
         try {
             ticTacToe.play(activePlayer,position);
             playAnimate(counter);
-
-            if(ticTacToe.hasWinner()){
-                showWinnerOption();
-                if (activePlayer.equals(Player.INTER)) {
-                     interScore++;
-                }else{
-                    gremioScore++;
-                }
-                refreshScore();
-                persistWinner();
-            }else if(ticTacToe.hasDraw()){
-                showDrawOption();
+            gameStrategy.getSituation();
+        } catch (WinnerException e){
+            showWinnerOption();
+            if (activePlayer.equals(Player.INTER)) {
+                interScore++;
             }else{
-                activePlayer = getNextPlayer();
+                gremioScore++;
             }
-        }catch ( SpotAlreadyFilledException e) {
+            refreshScore();
+            persistWinner();
+        } catch (DrawException e){
+            showDrawOption();
+        } catch ( SpotAlreadyFilledException e) {
             Toast.makeText(getApplicationContext(), "Local já ocupado", Toast.LENGTH_SHORT).show();
+        } finally {
+            activePlayer = getNextPlayer();
         }
 
     }

@@ -25,7 +25,7 @@ public class TicTacToeTest {
     @Test
     public void shouldSetPlayerNumberOnTheStageWhenPlay(){
         ticTacToe.play(Player.GREMIO,0);
-        assertEquals(Player.GREMIO.getPlayerNumber(),ticTacToe.getPlayerNumberByLocationStage(0));
+        assertEquals(Player.GREMIO.getPlayerNumber().intValue(),ticTacToe.getStagePosition(0));
     }
 
     @Test
@@ -40,16 +40,6 @@ public class TicTacToeTest {
         assertTrue(ticTacToe.canPlay(0));
     }
 
-    @Test
-    public void shouldReturnTrueWhenWinnerFirsRow(){
-        ticTacToe.playFirstRow();
-        assertTrue(ticTacToe.hasWinner());
-    }
-
-    @Test
-    public void shouldNotHaveWinnerWhenStartGame(){
-     assertFalse(ticTacToe.hasWinner());
-    }
 
     @Test(expected = SpotAlreadyFilledException.class)
     public void shouldThrowExceptionWhenPlayInSpotThatAlreadyFilled(){
@@ -58,19 +48,6 @@ public class TicTacToeTest {
         ticTacToe.play(Player.INTER, 0);
     }
 
-    @Test
-    public void shouldReturnTrueWhenAreNineAndDoesntHaveWinner(){
-        ticTacToe.setMoves(9);
-
-        assertTrue(ticTacToe.hasDraw());
-    }
-
-    @Test
-    public void shouldReturnFalseWhenMoveAreLowerThanNine(){
-        ticTacToe.setMoves(2);
-
-        assertFalse(ticTacToe.hasDraw());
-    }
 
     @Test
     public void shouldIncrementMoveWhenPlay(){
