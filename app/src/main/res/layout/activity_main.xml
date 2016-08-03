@@ -13,7 +13,7 @@
         android:rowCount="3"
         android:id="@+id/gridLayout"
         android:background="@drawable/board"
-        android:layout_below="@+id/userinfo"
+        android:layout_centerVertical="true"
         android:layout_alignLeft="@+id/userinfo"
         android:layout_alignStart="@+id/userinfo">
 
