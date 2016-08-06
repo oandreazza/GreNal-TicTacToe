@@ -117,8 +117,8 @@ public class LoadingActivity extends AppCompatActivity implements GoogleApiClien
             userSessionEdit.putString("email", acct.getEmail());
             userSessionEdit.putString("id", acct.getId());
             userSessionEdit.commit();
-            Intent game = new Intent(LoadingActivity.this,MainActivity.class);
-            startActivity(game);
+            Intent gameType = new Intent(LoadingActivity.this,GameTypeActivity.class);
+            startActivity(gameType);
         } else {
             // Signed out, show unauthenticated UI.
             updateUI(false);
