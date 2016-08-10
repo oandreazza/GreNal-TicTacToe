@@ -1,13 +1,17 @@
 package br.com.mauricio.ticTacToeGrenal.model;
 
 
+import java.util.Arrays;
+import java.util.List;
+
 import br.com.mauricio.ticTacToeGrenal.exception.SpotAlreadyFilledException;
 import br.com.mauricio.ticTacToeGrenal.types.Player;
 
 public class TicTacToe implements Game {
 
-    private int[] stage;
+    private Integer[] stage;
     private int moves;
+    private List<Integer> stageList;
 
     public TicTacToe() {
         setInitialStageStatus();
@@ -44,8 +48,12 @@ public class TicTacToe implements Game {
     }
 
     private void setInitialStageStatus() {
-        this.stage = new int[] {2,2,2,2,2,2,2,2,2};
+        this.stage = new Integer[] {2,2,2,2,2,2,2,2,2};
         this.moves = 0;
+    }
+
+    public void setList(){
+        this.stageList = Arrays.asList(this.stage);
     }
 
 
@@ -59,5 +67,13 @@ public class TicTacToe implements Game {
 
     public int getStagePosition(int position) {
         return this.stage[position];
+    }
+
+    public List<Integer> getStageList() {
+        return stageList;
+    }
+
+    public void setStageList(List<Integer> stageList) {
+        this.stageList = stageList;
     }
 }

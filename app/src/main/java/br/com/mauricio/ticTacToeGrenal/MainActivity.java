@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.GridLayout;
 import android.widget.ImageView;
@@ -12,10 +13,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.joda.time.LocalDateTime;
+
+import java.util.List;
 
 import br.com.mauricio.ticTacToeGrenal.exception.DrawException;
 import br.com.mauricio.ticTacToeGrenal.exception.SpotAlreadyFilledException;
@@ -36,17 +42,35 @@ public class MainActivity extends AppCompatActivity {
     private TicTacToe ticTacToe;
     private boolean doubleBackToExitPressedOnce = false;
     private TicTacToeStrategy gameStrategy;
+    private FirebaseDatabase db;
+    private DatabaseReference gameReef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        this.db = FirebaseDatabase.getInstance();
 
         userSession = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         TextView welcome = (TextView) findViewById(R.id.welcome);
         welcome.setText(userSession.getString("email", null));
 
         startGame();
+
+        gameReef = db.getReference("multiplayer").child("games").child("-KOhJ8Kf4oSd2tjIxzrX");
+        gameReef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                TicTacToe ticTacToeChanged = dataSnapshot.getValue(TicTacToe.class);
+                Log.i("Jogo:", ticTacToeChanged.getStageList().toString());
+                refresh(ticTacToeChanged);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
     }
 
@@ -56,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
         ticTacToe = (TicTacToe) match.getGame();
         this.activePlayer = Player.GREMIO;
         gameStrategy = new TicTacToeStrategy(ticTacToe);
+
     }
 
 
@@ -64,9 +89,12 @@ public class MainActivity extends AppCompatActivity {
         int position = Integer.parseInt(counter.getTag().toString());
 
 
+
         try {
             ticTacToe.play(activePlayer,position);
-            playAnimate(counter);
+            //playAnimate(counter);
+            ticTacToe.setList();
+            gameReef.setValue(ticTacToe);
             gameStrategy.getSituation();
         } catch (WinnerException e){
             showWinnerOption();
@@ -87,14 +115,13 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void playAnimate(ImageView counter) {
-        counter.setTranslationY(-1000f);
-        counter.animate().translationYBy(1000f).setDuration(300);
-        counter.setImageResource(activePlayer.getPlayerImage());
+    private void playAnimate(ImageView tappedSpot) {
+        tappedSpot.setTranslationY(-1000f);
+        tappedSpot.animate().translationYBy(1000f).setDuration(300);
+        tappedSpot.setImageResource(activePlayer.getPlayerImage());
     }
 
     private void persistWinner() {
-        FirebaseDatabase db = FirebaseDatabase.getInstance();
         DatabaseReference ranking = db.getReference("ranking").child("results");
 
         FinalScore finalScore = new FinalScore();
@@ -150,6 +177,21 @@ public class MainActivity extends AppCompatActivity {
 
         for(int i = 0; i < gridLayout.getChildCount(); i++){
             ((ImageView) gridLayout.getChildAt(i)).setImageResource(android.R.color.transparent);
+        }
+    }
+
+    private void refresh(TicTacToe ticTacToeParam){
+        GridLayout gridLayout = (GridLayout) findViewById(R.id.gridLayout);
+        List<Integer> listSpot = ticTacToeParam.getStageList();
+        Log.i("Atualizando:",listSpot.toString());
+        for(int i = 0; i < gridLayout.getChildCount(); i++){
+            if(listSpot.get(i) != 2){
+                Player playerRefresh = Player.getPlayerById(listSpot.get(i));
+                ((ImageView) gridLayout.getChildAt(i)).setImageResource(playerRefresh.getPlayerImage());
+
+            }else {
+                ((ImageView) gridLayout.getChildAt(i)).setImageResource(android.R.color.transparent);
+            }
         }
     }
 

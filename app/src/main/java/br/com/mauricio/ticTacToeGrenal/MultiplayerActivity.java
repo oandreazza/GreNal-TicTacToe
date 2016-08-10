@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.mauricio.ticTacToeGrenal.model.Room;
+import br.com.mauricio.ticTacToeGrenal.model.TicTacToe;
 
 public class MultiplayerActivity extends AppCompatActivity {
 
@@ -37,5 +38,13 @@ public class MultiplayerActivity extends AppCompatActivity {
             }
         };
         gameList.setAdapter(adapter);
+
+        TicTacToe ticTacToe = new TicTacToe();
+        ticTacToe.setList();
+        DatabaseReference gamesReef = db.getReference("multiplayer").child("games");
+        gamesReef.push().setValue(ticTacToe);
+
+
+
     }
 }

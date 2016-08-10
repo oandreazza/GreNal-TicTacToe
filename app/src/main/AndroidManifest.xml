@@ -19,7 +19,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".GameTypeActivity" />
-        <activity android:name=".MultiplayerActivity"></activity>
+        <activity android:name=".MultiplayerActivity" />
+        <activity android:name=".OnlineGamePlay"></activity>
     </application>
 
 </manifest>

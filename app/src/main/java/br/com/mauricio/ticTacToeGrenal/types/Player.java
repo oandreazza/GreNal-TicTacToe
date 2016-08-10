@@ -28,4 +28,12 @@ public enum Player {
     public int getPlayerImage(){
         return this.playerImage;
     }
+    
+    public static Player getPlayerById(int id){
+        for (Player player: values()) {
+            if (player.getPlayerNumber() == id)
+                return player;
+        }
+        return null;
+    }
 }
